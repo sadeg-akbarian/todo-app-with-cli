@@ -7,6 +7,21 @@
 </template>
 
 <style>
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  direction: ltr;
+}
+
+body {
+  margin: 0;
+  /* height: 100vh; */
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
