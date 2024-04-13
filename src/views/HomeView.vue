@@ -1,18 +1,36 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>ToDo App</h1>
+    <RadioButtons @currentRadioState="whichToDosShouldBeDisplayed" />
+    <ToDoList />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import RadioButtons from "@/components/RadioButtons.vue";
+import ToDoList from "@/components/ToDoList.vue";
 
 export default {
   name: "HomeView",
   components: {
-    HelloWorld,
+    RadioButtons,
+    ToDoList,
+  },
+  methods: {
+    whichToDosShouldBeDisplayed(data) {
+      console.log(data);
+    },
   },
 };
 </script>
+
+<style>
+.home {
+  padding-inline: 3rem;
+}
+
+h1 {
+  color: brown;
+  font-size: 3rem;
+}
+</style>
