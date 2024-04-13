@@ -2,7 +2,7 @@
   <div class="home">
     <h1>ToDo App</h1>
     <RadioButtons @currentRadioState="whichToDosShouldBeDisplayed" />
-    <ToDoList />
+    <ToDoList :whichRadioState="currentRadioState" />
   </div>
 </template>
 
@@ -11,6 +11,11 @@ import RadioButtons from "@/components/RadioButtons.vue";
 import ToDoList from "@/components/ToDoList.vue";
 
 export default {
+  data() {
+    return {
+      currentRadioState: null,
+    };
+  },
   name: "HomeView",
   components: {
     RadioButtons,
@@ -18,7 +23,7 @@ export default {
   },
   methods: {
     whichToDosShouldBeDisplayed(data) {
-      console.log(data);
+      this.currentRadioState = data;
     },
   },
 };

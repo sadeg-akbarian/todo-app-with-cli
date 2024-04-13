@@ -48,6 +48,9 @@ export default {
     },
   },
   emits: ["currentRadioState"],
+  created() {
+    this.sendRadioStateToHomeView();
+  },
 };
 </script>
 
