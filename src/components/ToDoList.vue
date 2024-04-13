@@ -1,6 +1,10 @@
 <template>
   <h2>ToDo List</h2>
-  <!-- <RegularButtonComponent :buttonName="'Delete Done ToDos'" /> -->
+  <RegularButtonComponent
+    :buttonName="'Delete Done ToDos'"
+    @click="deleteDoneToDos()"
+    :style="{ 'margin-left': '2rem' }"
+  />
   <ul>
     <template v-for="(toDo, index) of toDoList" :key="toDo.id">
       <li v-if="shouldToDoBeRendered(toDo)">
@@ -22,7 +26,7 @@
 </template>
 
 <script>
-// import RegularButtonComponent from "@/components/RegularButtonComponent.vue";
+import RegularButtonComponent from "@/components/RegularButtonComponent.vue";
 
 export default {
   data() {
@@ -33,7 +37,7 @@ export default {
   },
   name: "ToDoList",
   components: {
-    // RegularButtonComponent,
+    RegularButtonComponent,
   },
   props: {
     whichRadioState: String,
@@ -71,6 +75,7 @@ export default {
         })
         .then((data) => {
           this.toDoList[itsIndexInTheToDoList] = data;
+          this.sendToHomeView();
         });
     },
     fetchTheToDos() {
@@ -84,9 +89,41 @@ export default {
         })
         .then((data) => {
           this.toDoList = data;
+          this.sendToHomeView();
         });
     },
+    deleteDoneToDos() {
+      const listOfDoneToDos = [];
+      for (let toDo of this.toDoList) {
+        if (toDo.done === true) {
+          listOfDoneToDos.push(toDo);
+        }
+      }
+      for (let i = 0; i < listOfDoneToDos.length; i++) {
+        fetch(this.urlOfBackend + listOfDoneToDos[i].id, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok === true) {
+              return response.json();
+            } else {
+              alert(
+                `The ToDo: '${listOfDoneToDos[i].description}' could not be deleted!!!`
+              );
+            }
+          })
+          .then(() => {
+            if (i === listOfDoneToDos.length - 1) {
+              this.fetchTheToDos();
+            }
+          });
+      }
+    },
+    sendToHomeView() {
+      this.$emit("sendToDoList", this.toDoList);
+    },
   },
+  emits: ["sendToDoList"],
   created() {
     this.fetchTheToDos();
   },
@@ -98,6 +135,7 @@ h2 {
   font-size: 2rem;
   color: blue;
   margin-left: 1rem;
+  margin-top: 4rem;
 }
 
 ul {

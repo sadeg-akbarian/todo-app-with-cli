@@ -10,9 +10,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-button {
-  margin-left: 2rem;
-}
-</style>
