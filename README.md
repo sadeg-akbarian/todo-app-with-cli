@@ -1,5 +1,7 @@
 # todo-app-with-cli
 
+Project coded with Node version 20.10.0
+
 ## Project setup
 ```
 npm install
